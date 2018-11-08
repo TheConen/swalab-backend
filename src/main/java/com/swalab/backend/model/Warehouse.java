@@ -4,13 +4,17 @@ import java.util.List;
 
 public class Warehouse {
     
-    private List<WarehouseOrder> parts;
+    private List<WarehousePartAndOrder> partAndOrders;
 
-    public List<WarehouseOrder> getParts() {
-        return parts;
+    public List<WarehousePartAndOrder> getPartAndOrders() {
+        return partAndOrders;
     }
 
-    public void setParts(List<WarehouseOrder> parts) {
-        this.parts = parts;
+    public void setPartAndOrders(List<WarehousePartAndOrder> partAndOrders) {
+        this.partAndOrders = partAndOrders;
+    }
+
+    public void addPartOrOrder(WarehousePartAndOrder partAndOrder) {
+        partAndOrders.add(partAndOrder);
     }
 }

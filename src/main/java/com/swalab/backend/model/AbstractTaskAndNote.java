@@ -7,13 +7,11 @@ public abstract class AbstractTaskAndNote {
     private String title;
     private String description;
     private Date creationDate;
-    private Technican technican;
 
-    public AbstractTaskAndNote(String title, String description, Date creationDate, Technican technican) {
+    public AbstractTaskAndNote(String title, String description, Date creationDate) {
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
-        this.technican = technican;
     }
 
     public String getTitle() {
@@ -40,11 +38,4 @@ public abstract class AbstractTaskAndNote {
         this.creationDate = creationDate;
     }
 
-    public Technican getTechnican() {
-        return technican;
-    }
-
-    public void setTechnican(Technican technican) {
-        this.technican = technican;
-    }
 }

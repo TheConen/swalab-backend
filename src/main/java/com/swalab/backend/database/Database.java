@@ -25,23 +25,23 @@ public class Database {
     }
 
     private void initNotes() {
-        taskAndNoteList.add(new Task("note title", "note description", Status.OPEN, new Date(System.currentTimeMillis()), technican));
+        taskAndNoteList.add(new Task("note title", "note description", Status.OPEN, new Date(System.currentTimeMillis())));
     }
 
     private void initCustomers() {
-        Part part = new Part("part name", "part description");
-        Bom bom = new Bom(part, 42, "kg");
+        AvailablePart availablePart = new AvailablePart("availablePart name", "availablePart description");
+        Bom bom = new Bom(availablePart, 42, "kg");
         List<Bom> bomList = new ArrayList<>();
         bomList.add(bom);
-        ServiceProduct serviceProduct = new ServiceProduct("serviceProduct name", "description blah", 678, new Date(System.currentTimeMillis()), "documents.com", bomList);
-        List<ServiceProduct> serviceProductList = new ArrayList<>();
-        serviceProductList.add(serviceProduct);
-        List<AbstractPartAndService> plannedPartsAndServices = new ArrayList<>();
-        plannedPartsAndServices.add(part);
-        ServiceOrder serviceOrder = new ServiceOrder("serviceOrder description", technican, serviceProduct, new Date(System.currentTimeMillis()), plannedPartsAndServices, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), Status.IN_PROGRESS);
-        List<ServiceOrder> serviceHistoryList = new ArrayList<>();
-        serviceHistoryList.add(serviceOrder);
-        Customer customer = new Customer("customer name", "geolocation", "0987654321", "customer@web.de", "customerwebsite.com", "CustomerStreet 15", serviceProductList, serviceHistoryList);
+        Product product = new Product("product name", "description blah", 678, new Date(System.currentTimeMillis()), "documents.com", bomList);
+        List<Product> productList = new ArrayList<>();
+        productList.add(product);
+        List<AvailablePart> plannedPartsAndServices = new ArrayList<>();
+        plannedPartsAndServices.add(availablePart);
+        Appointment appointment = new Appointment("Appointment description", product, new Date(System.currentTimeMillis()), Status.OPEN, bomList, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), bomList, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        List<Appointment> serviceHistoryList = new ArrayList<>();
+        serviceHistoryList.add(appointment);
+        Customer customer = new Customer("customer name", "geolocation", "0987654321", "customer@web.de", "customerwebsite.com", "CustomerStreet 15", productList, serviceHistoryList);
         customers.add(customer);
     }
 
