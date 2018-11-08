@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Appointment {
 
+    private Customer customer;
     private String description;
     private Product product;
     private Date creationDate;
@@ -17,7 +18,11 @@ public class Appointment {
     private Date realDateFrom;
     private Date realDateTo;
 
-    public Appointment(String description, Product product, Date creationDate, Status status, List<Bom> plannedPartsAndServices, Date plannedDateTimeFrom, Date plannedDateTimeTo) {
+    public Appointment() {
+    }
+
+    public Appointment(Customer customer, String description, Product product, Date creationDate, Status status, List<Bom> plannedPartsAndServices, Date plannedDateTimeFrom, Date plannedDateTimeTo) {
+        this.customer = customer;
         this.description = description;
         this.product = product;
         this.creationDate = creationDate;
@@ -30,7 +35,8 @@ public class Appointment {
         realDateTo = null;
     }
 
-    public Appointment(String description, Product product, Date creationDate, Status status, List<Bom> plannedPartsAndServices, Date plannedDateTimeFrom, Date plannedDateTimeTo, List<Bom> usedPartsAndServices, Date realDateFrom, Date realDateTo) {
+    public Appointment(Customer customer, String description, Product product, Date creationDate, Status status, List<Bom> plannedPartsAndServices, Date plannedDateTimeFrom, Date plannedDateTimeTo, List<Bom> usedPartsAndServices, Date realDateFrom, Date realDateTo) {
+        this.customer = customer;
         this.description = description;
         this.product = product;
         this.creationDate = creationDate;
@@ -41,6 +47,14 @@ public class Appointment {
         this.usedPartsAndServices = usedPartsAndServices;
         this.realDateFrom = realDateFrom;
         this.realDateTo = realDateTo;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getDescription() {

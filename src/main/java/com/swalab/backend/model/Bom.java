@@ -9,6 +9,9 @@ public class Bom {
     private int quantity;
     private String unit;
 
+    public Bom() {
+    }
+
     public Bom(AvailablePart availablePart, int quantity, String unit) {
         this.availablePart = availablePart;
         this.quantity = quantity;

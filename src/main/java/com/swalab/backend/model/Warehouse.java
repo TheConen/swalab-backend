@@ -6,6 +6,13 @@ public class Warehouse {
     
     private List<WarehousePartAndOrder> partAndOrders;
 
+    public Warehouse() {
+    }
+
+    public Warehouse(List<WarehousePartAndOrder> partAndOrders) {
+        this.partAndOrders = partAndOrders;
+    }
+
     public List<WarehousePartAndOrder> getPartAndOrders() {
         return partAndOrders;
     }

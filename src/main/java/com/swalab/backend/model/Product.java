@@ -15,6 +15,9 @@ public class Product {
     private String documents;
     private List<Bom> productParts;
 
+    public Product() {
+    }
+
     public Product(String name, String description, long serialNumber, Date purchaseDate, String documents, List<Bom> productParts) {
         this.name = name;
         this.description = description;

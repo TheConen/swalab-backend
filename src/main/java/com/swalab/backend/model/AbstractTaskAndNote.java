@@ -8,6 +8,9 @@ public abstract class AbstractTaskAndNote {
     private String description;
     private Date creationDate;
 
+    public AbstractTaskAndNote() {
+    }
+
     public AbstractTaskAndNote(String title, String description, Date creationDate) {
         this.title = title;
         this.description = description;

@@ -1,5 +1,6 @@
 package com.swalab.backend.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
@@ -11,9 +12,13 @@ public class Customer {
     private String web;
     private String address;
     private List<Product> products;
-    private List<Appointment> appointmentHistoryList;
+    private List<Appointment> appointmentHistoryList = new ArrayList<>();
 
-    public Customer(String name, String geolocation, String phone, String mail, String web, String address, List<Product> products, List<Appointment> appointmentHistoryList) {
+    public Customer() {
+
+    }
+
+    public Customer(String name, String geolocation, String phone, String mail, String web, String address, List<Product> products) {
         this.name = name;
         this.geolocation = geolocation;
         this.phone = phone;
@@ -21,7 +26,6 @@ public class Customer {
         this.web = web;
         this.address = address;
         this.products = products;
-        this.appointmentHistoryList = appointmentHistoryList;
     }
 
     public String getName() {
