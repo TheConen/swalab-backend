@@ -16,12 +16,12 @@ public class Product {
     private long serialNumber;
     private Date purchaseDate;
     private String documents;
-    private List<Bom> productParts;
+    private List<PartWithQuantity> productParts;
 
     public Product() {
     }
 
-    public Product(String name, String description, long serialNumber, Date purchaseDate, String documents, List<Bom> productParts) {
+    public Product(String name, String description, long serialNumber, Date purchaseDate, String documents, List<PartWithQuantity> productParts) {
         this.name = name;
         this.description = description;
         this.serialNumber = serialNumber;
@@ -70,11 +70,11 @@ public class Product {
         this.documents = documents;
     }
 
-    public List<Bom> getProductParts() {
+    public List<PartWithQuantity> getProductParts() {
         return productParts;
     }
 
-    public void setProductParts(List<Bom> productParts) {
+    public void setProductParts(List<PartWithQuantity> productParts) {
         this.productParts = productParts;
     }
 

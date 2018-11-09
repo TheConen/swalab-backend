@@ -47,22 +47,22 @@ public class TechnicianDatabase {
     }
 
     private void initWarehouse() {
-        Bom cablesBom = new Bom(availableParts.get(2), 42, "m");
-        WarehousePartAndOrder cablesWarehousePartAndOrder = new WarehousePartAndOrder(123, "my cables", new Date(System.currentTimeMillis()), cablesBom, Status.FINISHED);
+        PartWithQuantity cablesPartWithQuantity = new PartWithQuantity(availableParts.get(2), 42, "m");
+        WarehousePartAndOrder cablesWarehousePartAndOrder = new WarehousePartAndOrder(123, "my cables", new Date(System.currentTimeMillis()), cablesPartWithQuantity, Status.FINISHED);
         warehousePartAndOrders.add(cablesWarehousePartAndOrder);
     }
 
     private void initCustomers() {
-        Bom cpuBom = new Bom(availableParts.get(0), 1, "piece");
-        Bom ramBom = new Bom(availableParts.get(1), 16, "GB");
-        Product thinkPad = new Product("ThinkPad", "Lenovo ThinkPad",543, new Date(System.currentTimeMillis()), "c/files/thinkpad/manual", Arrays.asList(cpuBom, ramBom));
+        PartWithQuantity cpuPartWithQuantity = new PartWithQuantity(availableParts.get(0), 1, "piece");
+        PartWithQuantity ramPartWithQuantity = new PartWithQuantity(availableParts.get(1), 16, "GB");
+        Product thinkPad = new Product("ThinkPad", "Lenovo ThinkPad",543, new Date(System.currentTimeMillis()), "c/files/thinkpad/manual", Arrays.asList(cpuPartWithQuantity, ramPartWithQuantity));
         Customer customerAG = new Customer("customerAG", "Karlsruhe", "085432658", "customer@swalab.com", "www.customerag.com", "Customerstraße 179, 79156 Karlsruhe", Arrays.asList(thinkPad));
         customers.add(customerAG);
     }
 
     private void initAppointments() {
-        Bom cpuBom = new Bom(availableParts.get(0), 1, "piece");
-        Appointment changeCpuAppointment = new Appointment(customers.get(0), "Change the CPU", customers.get(0).getProducts().get(0), new Date(System.currentTimeMillis()), Status.OPEN, Arrays.asList(cpuBom), new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        PartWithQuantity cpuPartWithQuantity = new PartWithQuantity(availableParts.get(0), 1, "piece");
+        Appointment changeCpuAppointment = new Appointment(customers.get(0), "Change the CPU", customers.get(0).getProducts().get(0), new Date(System.currentTimeMillis()), Status.OPEN, Arrays.asList(cpuPartWithQuantity), new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
         appointments.add(changeCpuAppointment);
     }
 
