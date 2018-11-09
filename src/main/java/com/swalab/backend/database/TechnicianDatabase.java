@@ -8,17 +8,17 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class NoJsTechnicianDatabase {
+public class TechnicianDatabase {
 
     private List<AvailablePart> availableParts = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
     private List<AbstractTaskAndNote> taskAndNoteList = new ArrayList<>();
     private List<Appointment> appointments = new ArrayList<>();
-    private Warehouse warehouse = null;
+    private List<WarehousePartAndOrder> warehousePartAndOrders = new ArrayList<>();
     private Technician noJsTechnician;
 
     @Autowired
-    public NoJsTechnicianDatabase() {
+    public TechnicianDatabase() {
         initAvailableParts();
         initNotes();
         initWarehouse();
@@ -47,10 +47,9 @@ public class NoJsTechnicianDatabase {
     }
 
     private void initWarehouse() {
-        List<WarehousePartAndOrder> warehousePartAndOrders;
         Bom cablesBom = new Bom(availableParts.get(2), 42, "m");
         WarehousePartAndOrder cablesWarehousePartAndOrder = new WarehousePartAndOrder(123, "my cables", new Date(System.currentTimeMillis()), cablesBom, Status.FINISHED);
-        warehouse = new Warehouse(Arrays.asList(cablesWarehousePartAndOrder));
+        warehousePartAndOrders.add(cablesWarehousePartAndOrder);
     }
 
     private void initCustomers() {
@@ -68,11 +67,23 @@ public class NoJsTechnicianDatabase {
     }
 
     private void initTechnician() {
-        noJsTechnician = new Technician("noJs@swalab.com", "noJs", "noJs", "01234567", appointments, taskAndNoteList, customers, warehouse);
+        noJsTechnician = new Technician("noJs@swalab.com", "noJs", "noJs", "01234567", appointments, taskAndNoteList, customers, warehousePartAndOrders);
     }
 
-    public Technician getNoJsTechnician() {
-        return noJsTechnician;
+    public Technician getTechnicianWithName(String name) {
+        if (noJsTechnician.getName().equals(name)) {
+            return noJsTechnician;
+        } else {
+            return null;
+        }
+    }
+
+    public Technician getTechnicianWithId(Long id) {
+        if (noJsTechnician.getId().equals(id)) {
+            return noJsTechnician;
+        } else {
+            return null;
+        }
     }
 
 }

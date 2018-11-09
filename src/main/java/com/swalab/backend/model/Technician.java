@@ -1,9 +1,12 @@
 package com.swalab.backend.model;
 
+import com.swalab.backend.database.IdGenerator;
+
 import java.util.List;
 
 public class Technician {
 
+    private final Long id = IdGenerator.getNewId();
     private String email;
     private String name;
     private String password;
@@ -11,12 +14,12 @@ public class Technician {
     private List<Appointment> appointments;
     private List<AbstractTaskAndNote> taskAndNotes;
     private List<Customer> customers;
-    private Warehouse parts;
+    private List<WarehousePartAndOrder> parts;
 
     public Technician() {
     }
 
-    public Technician(String email, String name, String password, String phone, List<Appointment> appointments, List<AbstractTaskAndNote> taskAndNotes, List<Customer> customers, Warehouse parts) {
+    public Technician(String email, String name, String password, String phone, List<Appointment> appointments, List<AbstractTaskAndNote> taskAndNotes, List<Customer> customers, List<WarehousePartAndOrder> parts) {
         this.email = email;
         this.name = name;
         this.password = password;
@@ -83,12 +86,16 @@ public class Technician {
         this.customers = customers;
     }
 
-    public Warehouse getParts() {
+    public List<WarehousePartAndOrder> getParts() {
         return parts;
     }
 
-    public void setParts(Warehouse parts) {
+    public void setParts(List<WarehousePartAndOrder> parts) {
         this.parts = parts;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 }

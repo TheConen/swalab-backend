@@ -1,6 +1,6 @@
 package com.swalab.backend;
 
-import com.swalab.backend.database.NoJsTechnicianDatabase;
+import com.swalab.backend.database.TechnicianDatabase;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ public class SwalabBackendApplication {
 	}
 
 	@Bean
-	public NoJsTechnicianDatabase database() {
-		return new NoJsTechnicianDatabase();
+	public TechnicianDatabase database() {
+		return new TechnicianDatabase();
 	}
 }

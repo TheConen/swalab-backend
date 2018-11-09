@@ -1,10 +1,13 @@
 package com.swalab.backend.model;
 
+import com.swalab.backend.database.IdGenerator;
+
 /**
  * Build of material: Item on lists containing a part, the quantity and an unit
  */
 public class Bom {
 
+    private final Long id = IdGenerator.getNewId();
     private AvailablePart availablePart;
     private int quantity;
     private String unit;
@@ -40,5 +43,9 @@ public class Bom {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

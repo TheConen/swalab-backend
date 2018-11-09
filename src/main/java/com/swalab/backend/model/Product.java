@@ -1,5 +1,7 @@
 package com.swalab.backend.model;
 
+import com.swalab.backend.database.IdGenerator;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  */
 public class Product {
 
+    private final Long id = IdGenerator.getNewId();
     private String name;
     private String description;
     private long serialNumber;
@@ -73,5 +76,9 @@ public class Product {
 
     public void setProductParts(List<Bom> productParts) {
         this.productParts = productParts;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -1,10 +1,13 @@
 package com.swalab.backend.model;
 
+import com.swalab.backend.database.IdGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
 
+    private final Long id = IdGenerator.getNewId();
     private String name;
     private String geolocation;
     private String phone;
@@ -90,5 +93,9 @@ public class Customer {
 
     public void setAppointmentHistoryList(List<Appointment> appointmentHistoryList) {
         this.appointmentHistoryList = appointmentHistoryList;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

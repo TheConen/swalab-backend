@@ -1,11 +1,14 @@
 package com.swalab.backend.model;
 
+import com.swalab.backend.database.IdGenerator;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Appointment {
 
+    private final Long id = IdGenerator.getNewId();
     private Customer customer;
     private String description;
     private Product product;
@@ -135,5 +138,9 @@ public class Appointment {
 
     public void setRealDateTo(Date realDateTo) {
         this.realDateTo = realDateTo;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

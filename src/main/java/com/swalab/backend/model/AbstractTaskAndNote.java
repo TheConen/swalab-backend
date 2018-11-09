@@ -1,9 +1,12 @@
 package com.swalab.backend.model;
 
+import com.swalab.backend.database.IdGenerator;
+
 import java.util.Date;
 
 public abstract class AbstractTaskAndNote {
 
+    private final Long id = IdGenerator.getNewId();
     private String title;
     private String description;
     private Date creationDate;
@@ -41,4 +44,7 @@ public abstract class AbstractTaskAndNote {
         this.creationDate = creationDate;
     }
 
+    public Long getId() {
+        return id;
+    }
 }

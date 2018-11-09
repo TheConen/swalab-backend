@@ -1,9 +1,12 @@
 package com.swalab.backend.model;
 
+import com.swalab.backend.database.IdGenerator;
+
 import java.util.Date;
 
 public class WarehousePartAndOrder {
 
+    private final Long id = IdGenerator.getNewId();
     private long orderNumber;
     private String description;
     private Date orderDate;
@@ -59,5 +62,9 @@ public class WarehousePartAndOrder {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
