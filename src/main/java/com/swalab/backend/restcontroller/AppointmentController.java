@@ -64,7 +64,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/appointment")
-    public void editCustomer(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) {
+    public void editAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         Appointment oldAppointment = getAppointmentWithId(technician, appointment.getId());
         if (oldAppointment == null) {

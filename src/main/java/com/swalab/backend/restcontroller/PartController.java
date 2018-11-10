@@ -19,7 +19,7 @@ public class PartController {
     }
 
     @GetMapping("/warehousepart/all")
-    public List<WarehousePartAndOrder> getAllAppointments(@RequestParam("technician") String technicianName) {
+    public List<WarehousePartAndOrder> getAllParts(@RequestParam("technician") String technicianName) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             return technician.getParts();
@@ -30,13 +30,13 @@ public class PartController {
     }
 
     @GetMapping("/warehousepart")
-    public WarehousePartAndOrder getAppointment(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") Long warehousepartId) {
+    public WarehousePartAndOrder getPart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") Long warehousepartId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         return getPartWithId(technician, warehousepartId);
     }
 
     @PostMapping("/warehousepart")
-    public Long addAppointment(@RequestParam("technician") String technicianName, @RequestBody() WarehousePartAndOrder warehousePartAndOrder) {
+    public Long addPart(@RequestParam("technician") String technicianName, @RequestBody() WarehousePartAndOrder warehousePartAndOrder) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             technician.getParts().add(warehousePartAndOrder);
@@ -49,7 +49,7 @@ public class PartController {
     }
 
     @DeleteMapping("/warehousepart")
-    public void deleteAppointment(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") Long warehousepartId) {
+    public void deletePart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") Long warehousepartId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             List<WarehousePartAndOrder> warehousePartAndOrders = technician.getParts();
@@ -62,7 +62,7 @@ public class PartController {
     }
 
     @PutMapping("/warehousepart")
-    public void editCustomer(@RequestParam("technician") String technicianName, @RequestBody() WarehousePartAndOrder warehousePartAndOrder) {
+    public void editPart(@RequestParam("technician") String technicianName, @RequestBody() WarehousePartAndOrder warehousePartAndOrder) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         WarehousePartAndOrder oldWarehousePartAndOrder = getPartWithId(technician, warehousePartAndOrder.getId());
         if (oldWarehousePartAndOrder == null) {
@@ -78,7 +78,7 @@ public class PartController {
     }
 
     @GetMapping("/abailablepart/all")
-    public List<AvailablePart> getAppointment() {
+    public List<AvailablePart> getAvailableParts() {
         return technicianDatabase.getAvailableParts();
     }
 
