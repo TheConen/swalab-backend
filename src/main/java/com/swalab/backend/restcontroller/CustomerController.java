@@ -30,11 +30,18 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/customer")
+    public Customer getCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") Long customerId) {
+        Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
+        return getCustomerWithId(technician, customerId);
+    }
+
     @PostMapping("/customer")
     public Long addCustomer(@RequestParam("technician") String technicianName, @RequestBody() Customer customer) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             technician.getCustomers().add(customer);
+            //ToDo set products and historyList with id
             return customer.getId();
         } else {
             //TODO
@@ -56,7 +63,35 @@ public class CustomerController {
     }
 
     @PutMapping("/customer")
-    public void editCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") Long customerId) {
-        //ToDo
+    public void editCustomer(@RequestParam("technician") String technicianName, @RequestBody() Customer customer) {
+        Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
+        Customer oldCustomer = getCustomerWithId(technician, customer.getId());
+        if (oldCustomer == null) {
+            return; //ToDo
+        }
+        oldCustomer.setName(customer.getName());
+        oldCustomer.setAddress(customer.getAddress());
+        oldCustomer.setGeolocation(customer.getGeolocation());
+        oldCustomer.setMail(customer.getMail());
+        oldCustomer.setPhone(customer.getPhone());
+        oldCustomer.setWeb(customer.getWeb());
+        if (!oldCustomer.getProducts().equals(customer.getProducts())) {
+            //ToDo
+        }
+        if (!oldCustomer.getAppointmentHistoryList().equals(customer.getAppointmentHistoryList())) {
+            //ToDo
+        }
+    }
+
+    private Customer getCustomerWithId(Technician technician, Long customerId) {
+        if (technician != null) {
+            List<Customer> customers = technician.getCustomers();
+            for (Customer customer : customers) {
+                if (customer.getId().equals(customerId)) {
+                    return customer;
+                }
+            }
+        }
+        return null;
     }
 }
