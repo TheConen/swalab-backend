@@ -2,6 +2,7 @@ package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
 import com.swalab.backend.model.Appointment;
+import com.swalab.backend.model.Status;
 import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +77,9 @@ public class AppointmentController {
         oldAppointment.setRealDateFrom(appointment.getRealDateFrom());
         oldAppointment.setRealDateTo(appointment.getRealDateTo());
         oldAppointment.setStatus(appointment.getStatus());
+        if (appointment.getStatus() == Status.FINISHED) {
+            //ToDo in AppointmentHistoryList einfügen
+        }
         if (!oldAppointment.getCustomer().equals(appointment.getCustomer())) {
             //ToDo
         }

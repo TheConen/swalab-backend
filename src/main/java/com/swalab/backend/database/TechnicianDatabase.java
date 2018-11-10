@@ -86,4 +86,8 @@ public class TechnicianDatabase {
         }
     }
 
+    public List<AvailablePart> getAvailableParts() {
+        return availableParts;
+    }
+
 }
