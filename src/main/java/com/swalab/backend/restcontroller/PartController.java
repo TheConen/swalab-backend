@@ -77,7 +77,7 @@ public class PartController {
         }
     }
 
-    @GetMapping("/abailablepart/all")
+    @GetMapping("/availablepart/all")
     public List<AvailablePart> getAvailableParts() {
         return technicianDatabase.getAvailableParts();
     }
