@@ -1,12 +1,10 @@
 package com.swalab.backend.model;
 
-import com.swalab.backend.database.IdGenerator;
-
 import java.util.List;
+import java.util.Objects;
 
 public class Technician {
 
-    private final Long id = IdGenerator.getNewId();
     private String email;
     private String name;
     private String password;
@@ -94,8 +92,16 @@ public class Technician {
         this.parts = parts;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Technician that = (Technician) o;
+        return Objects.equals(name, that.name);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

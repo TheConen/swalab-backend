@@ -4,6 +4,7 @@ import com.swalab.backend.database.IdGenerator;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This is the machine from the customer which needs a service. Don't mix up with "Part" which is a component of a product.
@@ -80,5 +81,18 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

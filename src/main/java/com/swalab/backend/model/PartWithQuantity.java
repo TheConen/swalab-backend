@@ -2,6 +2,8 @@ package com.swalab.backend.model;
 
 import com.swalab.backend.database.IdGenerator;
 
+import java.util.Objects;
+
 /**
  * Build of material: Item on lists containing a part, the quantity and an unit
  */
@@ -47,5 +49,18 @@ public class PartWithQuantity {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PartWithQuantity that = (PartWithQuantity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

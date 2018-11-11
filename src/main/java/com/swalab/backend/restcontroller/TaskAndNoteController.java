@@ -2,7 +2,6 @@ package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
 import com.swalab.backend.model.AbstractTaskAndNote;
-import com.swalab.backend.model.Customer;
 import com.swalab.backend.model.Task;
 import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;

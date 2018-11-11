@@ -1,7 +1,9 @@
 package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
-import com.swalab.backend.model.*;
+import com.swalab.backend.model.AvailablePart;
+import com.swalab.backend.model.Technician;
+import com.swalab.backend.model.WarehousePartAndOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

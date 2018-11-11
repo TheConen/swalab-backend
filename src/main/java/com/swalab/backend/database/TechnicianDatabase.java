@@ -78,14 +78,6 @@ public class TechnicianDatabase {
         }
     }
 
-    public Technician getTechnicianWithId(Long id) {
-        if (noJsTechnician.getId().equals(id)) {
-            return noJsTechnician;
-        } else {
-            return null;
-        }
-    }
-
     public List<AvailablePart> getAvailableParts() {
         return availableParts;
     }
