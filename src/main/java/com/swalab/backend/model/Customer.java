@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Customer {
 
-    private final Long id = IdGenerator.getNewId();
+    private Long id = IdGenerator.getNewId();
     private String name;
     private String geolocation;
     private String phone;
@@ -98,6 +98,14 @@ public class Customer {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        if (id < 0) {
+            this.id = IdGenerator.getNewId();
+        } else {
+            this.id = id;
+        }
     }
 
     @Override

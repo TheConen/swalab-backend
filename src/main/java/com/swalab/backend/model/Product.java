@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class Product {
 
-    private final Long id = IdGenerator.getNewId();
+    private Long id = IdGenerator.getNewId();
     private String name;
     private String description;
     private long serialNumber;
@@ -81,6 +81,14 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        if (id < 0) {
+            this.id = IdGenerator.getNewId();
+        } else {
+            this.id = id;
+        }
     }
 
     @Override

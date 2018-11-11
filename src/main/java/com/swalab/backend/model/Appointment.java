@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Appointment {
 
-    private final Long id = IdGenerator.getNewId();
+    private Long id = IdGenerator.getNewId();
     private Customer customer;
     private String description;
     private Product product;
@@ -143,6 +143,14 @@ public class Appointment {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        if (id < 0) {
+            this.id = IdGenerator.getNewId();
+        } else {
+            this.id = id;
+        }
     }
 
     @Override
