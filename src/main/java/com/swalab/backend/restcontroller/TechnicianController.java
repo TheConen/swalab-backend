@@ -1,6 +1,7 @@
 package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
+import com.swalab.backend.exceptionhandling.ObjectNotFoundException;
 import com.swalab.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class TechnicianController {
     }
 
     @PutMapping("/technician")
-    public void editTechnician(@RequestBody() Technician newTechnician) {
+    public void editTechnician(@RequestBody() Technician newTechnician) throws ObjectNotFoundException {
         Technician oldTechnician = technicianDatabase.getTechnicianWithName(newTechnician.getName());
         oldTechnician.setEmail(newTechnician.getEmail());
         oldTechnician.setPassword(newTechnician.getPassword());
@@ -54,9 +55,9 @@ public class TechnicianController {
         //remove deleted appointments
         oldAppointments.removeIf(t -> !newAppointments.contains(t));
         //update existing appointments
-        newAppointments.stream().filter(oldAppointments::contains).forEach(t -> appointmentController.editAppointment(oldTechnician.getName(), t));
+        //Todo newAppointments.stream().filter(oldAppointments::contains).forEach(t -> appointmentController.editAppointment(oldTechnician.getName(), t));
         //add new created appointments
-        newAppointments.stream().filter(t -> !oldAppointments.contains(t)).forEach(t -> appointmentController.addAppointment(oldTechnician.getName(), t));
+        //ToDo newAppointments.stream().filter(t -> !oldAppointments.contains(t)).forEach(t -> appointmentController.addAppointment(oldTechnician.getName(), t));
 
         List<WarehousePartAndOrder> oldParts = oldTechnician.getParts();
         List<WarehousePartAndOrder> newParts = newTechnician.getParts();

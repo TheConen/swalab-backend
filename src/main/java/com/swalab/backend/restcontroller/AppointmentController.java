@@ -1,13 +1,14 @@
 package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
+import com.swalab.backend.exceptionhandling.AppointmentNotFoundException;
+import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.Appointment;
 import com.swalab.backend.model.Status;
 import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,54 +22,64 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/all")
-    public List<Appointment> getAllAppointments(@RequestParam("technician") String technicianName) {
+    public List<Appointment> getAllAppointments(@RequestParam("technician") String technicianName) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        if (technician != null) {
-            return technician.getAppointments();
-        } else {
-            //TODO
-            return new ArrayList<>();
+        if (technician == null) {
+            throw new TechnicianNotFoundException(technicianName);
         }
+        return technician.getAppointments();
     }
 
     @GetMapping("/appointment")
-    public Appointment getAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") Long appointmentId) {
+    public Appointment getAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") Long appointmentId) throws TechnicianNotFoundException, AppointmentNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        return getAppointmentWithId(technician, appointmentId);
+        if (technician == null) {
+            throw new TechnicianNotFoundException(technicianName);
+        }
+        Appointment appointment = getAppointmentWithId(technician, appointmentId);
+        if (appointment == null) {
+            throw new AppointmentNotFoundException(appointmentId.toString());
+        }
+        return appointment;
     }
 
     @PostMapping("/appointment")
-    public Long addAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) {
+    public Long addAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        if (technician != null) {
-            technician.getAppointments().add(appointment);
-            //ToDo set product and planned/used Parts with id
-            return appointment.getId();
-        } else {
-            //TODO
-            return -1L;
+        if (technician == null) {
+            throw new TechnicianNotFoundException(technicianName);
         }
+        //ToDo set product and planned/used Parts with id
+        technician.getAppointments().add(appointment);
+        return appointment.getId();
     }
 
     @DeleteMapping("/appointment")
-    public void deleteAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") Long appointmentId) {
+    public void deleteAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") Long appointmentId) throws TechnicianNotFoundException, AppointmentNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        if (technician != null) {
-            List<Appointment> appointments = technician.getAppointments();
-            for (Appointment appointment : appointments) {
-                if (appointment.getId().equals(appointmentId)) {
-                    appointments.remove(appointment);
-                }
-            }
+        if (technician == null) {
+            throw new TechnicianNotFoundException(technicianName);
         }
+        List<Appointment> appointments = technician.getAppointments();
+        Appointment appointment = getAppointmentWithId(technician, appointmentId);
+        if (appointment == null) {
+            throw new AppointmentNotFoundException(appointmentId.toString());
+        }
+        appointments.remove(appointment);
     }
 
     @PutMapping("/appointment")
-    public void editAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) {
+    public void editAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) throws TechnicianNotFoundException, AppointmentNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
+        if (technician == null) {
+            throw new TechnicianNotFoundException(technicianName);
+        }
+        if (appointment == null) {
+            throw new AppointmentNotFoundException("null");
+        }
         Appointment oldAppointment = getAppointmentWithId(technician, appointment.getId());
         if (oldAppointment == null) {
-            return; //ToDo
+            throw new AppointmentNotFoundException(appointment.getId().toString());
         }
         oldAppointment.setCreationDate(appointment.getCreationDate());
         oldAppointment.setDescription(appointment.getDescription());
