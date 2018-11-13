@@ -42,7 +42,6 @@ public class TaskAndNoteController {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             technician.getTaskAndNotes().add(abstractTaskAndNote);
-            //ToDo set products and historyList with id
             return abstractTaskAndNote.getId();
         } else {
             //TODO
