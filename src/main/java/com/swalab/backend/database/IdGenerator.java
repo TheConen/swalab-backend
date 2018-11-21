@@ -2,7 +2,7 @@ package com.swalab.backend.database;
 
 public class IdGenerator {
 
-    private static Long lastId = 1L;
+    private static Long lastId = 0L;
 
     public static Long getNewId() {
         lastId += 1;

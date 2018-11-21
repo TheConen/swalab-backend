@@ -1,6 +1,7 @@
 package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
+import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.Customer;
 import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,12 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/all")
-    public List<Customer> getAllCustomers(@RequestParam("technician") String technicianName) {
+    public List<Customer> getAllCustomers(@RequestParam("technician") String technicianName) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             return technician.getCustomers();
         } else {
-            //TODO
-            return new ArrayList<>();
+            throw new TechnicianNotFoundException(technicianName);
         }
     }
 
