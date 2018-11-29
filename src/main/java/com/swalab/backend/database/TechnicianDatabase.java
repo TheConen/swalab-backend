@@ -58,7 +58,7 @@ public class TechnicianDatabase {
         Product thinkPad = new Product("ThinkPad", "Lenovo ThinkPad",543, new Date(System.currentTimeMillis()), "c/files/thinkpad/manual", Arrays.asList(cpuPartWithQuantity, ramPartWithQuantity));
         Customer customerAG = new Customer("customerAG", "Karlsruhe", "085432658", "customer@swalab.com", "www.customerag.com", "Customerstraße 179, 79156 Karlsruhe", Arrays.asList(thinkPad));
         List<Appointment> appointmentHistoryList = new ArrayList<>();
-        appointmentHistoryList.add(appointments.get(0));
+        customerAG.setAppointmentHistoryList(appointmentHistoryList);
         customers.add(customerAG);
     }
 
