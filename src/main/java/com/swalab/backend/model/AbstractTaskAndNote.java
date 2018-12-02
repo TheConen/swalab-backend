@@ -14,7 +14,7 @@ import java.util.Objects;
 })
 public abstract class AbstractTaskAndNote {
 
-    private Long id = IdGenerator.getNewId();
+    private long id = IdGenerator.getNewId();
     private String title;
     private String description;
     private Date creationDate;
@@ -52,11 +52,11 @@ public abstract class AbstractTaskAndNote {
         this.creationDate = creationDate;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         if (id < 0) {
             this.id = IdGenerator.getNewId();
         } else {

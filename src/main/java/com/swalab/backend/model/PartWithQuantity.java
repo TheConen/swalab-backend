@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class PartWithQuantity {
 
-    private Long id = IdGenerator.getNewId();
+    private long id = IdGenerator.getNewId();
     private AvailablePart availablePart;
     private int quantity;
     private String unit;
@@ -47,11 +47,11 @@ public class PartWithQuantity {
         this.unit = unit;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         if (id < 0) {
             this.id = IdGenerator.getNewId();
         } else {

@@ -31,13 +31,13 @@ public class CustomerController {
     }
 
     @GetMapping("/customer")
-    public Customer getCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") Long customerId) {
+    public Customer getCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") long customerId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         return getCustomerWithId(technician, customerId);
     }
 
     @PostMapping("/customer")
-    public Long addCustomer(@RequestParam("technician") String technicianName, @RequestBody() Customer customer) {
+    public long addCustomer(@RequestParam("technician") String technicianName, @RequestBody() Customer customer) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             technician.getCustomers().add(customer);
@@ -50,12 +50,12 @@ public class CustomerController {
     }
 
     @DeleteMapping("/customer")
-    public void deleteCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") Long customerId) {
+    public void deleteCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") long customerId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             List<Customer> customers = technician.getCustomers();
             for (Customer customer : customers) {
-                if (customer.getId().equals(customerId)) {
+                if (customer.getId() == customerId) {
                     customers.remove(customer);
                 }
             }
@@ -83,11 +83,11 @@ public class CustomerController {
         }
     }
 
-    private Customer getCustomerWithId(Technician technician, Long customerId) {
+    private Customer getCustomerWithId(Technician technician, long customerId) {
         if (technician != null) {
             List<Customer> customers = technician.getCustomers();
             for (Customer customer : customers) {
-                if (customer.getId().equals(customerId)) {
+                if (customer.getId() == customerId) {
                     return customer;
                 }
             }

@@ -32,13 +32,13 @@ public class TaskAndNoteController {
     }
 
     @GetMapping("/note")
-    public AbstractTaskAndNote getNote(@RequestParam("technician") String technicianName, @RequestParam("noteid") Long noteId) {
+    public AbstractTaskAndNote getNote(@RequestParam("technician") String technicianName, @RequestParam("noteid") long noteId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         return getNoteWithId(technician, noteId);
     }
 
     @PostMapping("/note")
-    public Long addNote(@RequestParam("technician") String technicianName, @RequestBody() AbstractTaskAndNote abstractTaskAndNote) {
+    public long addNote(@RequestParam("technician") String technicianName, @RequestBody() AbstractTaskAndNote abstractTaskAndNote) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             technician.getTaskAndNotes().add(abstractTaskAndNote);
@@ -50,12 +50,12 @@ public class TaskAndNoteController {
     }
 
     @DeleteMapping("/note")
-    public void deleteNote(@RequestParam("technician") String technicianName, @RequestParam("noteid") Long noteId) {
+    public void deleteNote(@RequestParam("technician") String technicianName, @RequestParam("noteid") long noteId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             List<AbstractTaskAndNote> abstractTaskAndNotes = technician.getTaskAndNotes();
             for (AbstractTaskAndNote abstractTaskAndNote : abstractTaskAndNotes) {
-                if (abstractTaskAndNote.getId().equals(noteId)) {
+                if (abstractTaskAndNote.getId() == noteId) {
                     abstractTaskAndNotes.remove(abstractTaskAndNote);
                 }
             }
@@ -77,11 +77,11 @@ public class TaskAndNoteController {
         }
     }
 
-    private AbstractTaskAndNote getNoteWithId(Technician technician, Long noteId) {
+    private AbstractTaskAndNote getNoteWithId(Technician technician, long noteId) {
         if (technician != null) {
             List<AbstractTaskAndNote> notes = technician.getTaskAndNotes();
             for (AbstractTaskAndNote note : notes) {
-                if (note.getId().equals(noteId)) {
+                if (note.getId() == noteId) {
                     return note;
                 }
             }

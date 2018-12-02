@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class WarehousePartAndOrder {
 
-    private Long id = IdGenerator.getNewId();
+    private long id = IdGenerator.getNewId();
     private long orderNumber;
     private String description;
     private Date orderDate;
@@ -65,11 +65,11 @@ public class WarehousePartAndOrder {
         this.status = status;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         if (id < 0) {
             this.id = IdGenerator.getNewId();
         } else {

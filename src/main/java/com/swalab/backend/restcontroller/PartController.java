@@ -32,13 +32,13 @@ public class PartController {
     }
 
     @GetMapping("/warehousepart")
-    public WarehousePartAndOrder getPart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") Long warehousepartId) {
+    public WarehousePartAndOrder getPart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") long warehousepartId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         return getPartWithId(technician, warehousepartId);
     }
 
     @PostMapping("/warehousepart")
-    public Long addPart(@RequestParam("technician") String technicianName, @RequestBody() WarehousePartAndOrder warehousePartAndOrder) {
+    public long addPart(@RequestParam("technician") String technicianName, @RequestBody() WarehousePartAndOrder warehousePartAndOrder) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             technician.getParts().add(warehousePartAndOrder);
@@ -51,12 +51,12 @@ public class PartController {
     }
 
     @DeleteMapping("/warehousepart")
-    public void deletePart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") Long warehousepartId) {
+    public void deletePart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") long warehousepartId) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
             List<WarehousePartAndOrder> warehousePartAndOrders = technician.getParts();
             for (WarehousePartAndOrder warehousePartAndOrder : warehousePartAndOrders) {
-                if (warehousePartAndOrder.getId().equals(warehousepartId)) {
+                if (warehousePartAndOrder.getId() == warehousepartId) {
                     warehousePartAndOrders.remove(warehousePartAndOrder);
                 }
             }
@@ -84,11 +84,11 @@ public class PartController {
         return technicianDatabase.getAvailableParts();
     }
 
-    private WarehousePartAndOrder getPartWithId(Technician technician, Long partId) {
+    private WarehousePartAndOrder getPartWithId(Technician technician, long partId) {
         if (technician != null) {
             List<WarehousePartAndOrder> warehousePartAndOrders = technician.getParts();
             for (WarehousePartAndOrder partAndOrder : warehousePartAndOrders) {
-                if (partAndOrder.getId().equals(partId)) {
+                if (partAndOrder.getId() == partId) {
                     return partAndOrder;
                 }
             }

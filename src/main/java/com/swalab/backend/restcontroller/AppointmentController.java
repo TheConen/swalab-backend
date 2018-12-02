@@ -31,20 +31,20 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment")
-    public Appointment getAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") Long appointmentId) throws TechnicianNotFoundException, AppointmentNotFoundException {
+    public Appointment getAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") long appointmentId) throws TechnicianNotFoundException, AppointmentNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician == null) {
             throw new TechnicianNotFoundException(technicianName);
         }
         Appointment appointment = getAppointmentWithId(technician, appointmentId);
         if (appointment == null) {
-            throw new AppointmentNotFoundException(appointmentId.toString());
+            throw new AppointmentNotFoundException(appointmentId + "");
         }
         return appointment;
     }
 
     @PostMapping("/appointment")
-    public Long addAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) throws TechnicianNotFoundException {
+    public long addAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician == null) {
             throw new TechnicianNotFoundException(technicianName);
@@ -55,7 +55,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/appointment")
-    public void deleteAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") Long appointmentId) throws TechnicianNotFoundException, AppointmentNotFoundException {
+    public void deleteAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") long appointmentId) throws TechnicianNotFoundException, AppointmentNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician == null) {
             throw new TechnicianNotFoundException(technicianName);
@@ -63,7 +63,7 @@ public class AppointmentController {
         List<Appointment> appointments = technician.getAppointments();
         Appointment appointment = getAppointmentWithId(technician, appointmentId);
         if (appointment == null) {
-            throw new AppointmentNotFoundException(appointmentId.toString());
+            throw new AppointmentNotFoundException(appointmentId + "");
         }
         appointments.remove(appointment);
     }
@@ -79,7 +79,7 @@ public class AppointmentController {
         }
         Appointment oldAppointment = getAppointmentWithId(technician, appointment.getId());
         if (oldAppointment == null) {
-            throw new AppointmentNotFoundException(appointment.getId().toString());
+            throw new AppointmentNotFoundException(appointment.getId() + "");
         }
         oldAppointment.setCreationDate(appointment.getCreationDate());
         oldAppointment.setDescription(appointment.getDescription());
@@ -105,11 +105,11 @@ public class AppointmentController {
         }
     }
 
-    private Appointment getAppointmentWithId(Technician technician, Long appointmentId) {
+    private Appointment getAppointmentWithId(Technician technician, long appointmentId) {
         if (technician != null) {
             List<Appointment> appointments = technician.getAppointments();
             for (Appointment appointment : appointments) {
-                if (appointment.getId().equals(appointmentId)) {
+                if (appointment.getId() == appointmentId) {
                     return appointment;
                 }
             }
