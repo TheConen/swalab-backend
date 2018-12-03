@@ -2,6 +2,7 @@ package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
 import com.swalab.backend.exceptionhandling.ObjectNotFoundException;
+import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,9 @@ public class TechnicianController {
 
     @PutMapping("/technician")
     public void editTechnician(@RequestBody() Technician newTechnician) throws ObjectNotFoundException {
+        if (newTechnician == null) {
+            throw new TechnicianNotFoundException("null");
+        }
         Technician oldTechnician = technicianDatabase.getTechnicianWithName(newTechnician.getName());
         oldTechnician.setEmail(newTechnician.getEmail());
         oldTechnician.setPassword(newTechnician.getPassword());
