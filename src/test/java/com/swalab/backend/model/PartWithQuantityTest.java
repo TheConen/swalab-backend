@@ -18,7 +18,7 @@ public class PartWithQuantityTest {
     @Before
     public void init() {
         availablePart = new AvailablePart(name, description);
-        testPartWithQuantity.setId(id - 1);
+        availablePart.setId(id - 1);
         testPartWithQuantity = new PartWithQuantity(availablePart, quantity, unit);
         testPartWithQuantity.setId(id);
     }
@@ -39,20 +39,27 @@ public class PartWithQuantityTest {
     @Test
     public void getQuantity() {
         assertThat(testPartWithQuantity.getQuantity()).isEqualTo(quantity);
-        int newQuantity = 10;
-        
     }
 
     @Test
     public void setQuantity() {
+        assertThat(testPartWithQuantity.getQuantity()).isEqualTo(quantity);
+        int newQuantity = 10;
+        testPartWithQuantity.setQuantity(newQuantity);
+        assertThat(testPartWithQuantity.getQuantity()).isEqualTo(newQuantity);
     }
 
     @Test
     public void getUnit() {
+        assertThat(testPartWithQuantity.getUnit()).isEqualTo(unit);
     }
 
     @Test
     public void setUnit() {
+        assertThat(testPartWithQuantity.getUnit()).isEqualTo(unit);
+        String newUnit = "mm";
+        testPartWithQuantity.setUnit(newUnit);
+        assertThat(testPartWithQuantity.getUnit()).isEqualTo(newUnit);
     }
 
     @Test
