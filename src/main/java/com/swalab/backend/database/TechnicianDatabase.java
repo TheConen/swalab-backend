@@ -1,5 +1,6 @@
 package com.swalab.backend.database;
 
+import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,20 +12,33 @@ import java.util.List;
 public class TechnicianDatabase {
 
     private List<AvailablePart> availableParts = new ArrayList<>();
+    private List<String> availableUnits = new ArrayList<>();
+
     private List<Customer> customers = new ArrayList<>();
     private List<AbstractTaskAndNote> taskAndNoteList = new ArrayList<>();
     private List<Appointment> appointments = new ArrayList<>();
     private List<WarehousePartAndOrder> warehousePartAndOrders = new ArrayList<>();
     private Technician noJsTechnician;
 
+    private List<Technician> technicians = new ArrayList<>();
+
     @Autowired
     public TechnicianDatabase() {
         initAvailableParts();
+        initAvailableUnits();
         initNotes();
         initWarehouse();
         initCustomers();
         initAppointments();
         initTechnician();
+        technicians.add(noJsTechnician);
+    }
+
+    private void initAvailableUnits() {
+        availableUnits.add("kg");
+        availableUnits.add("m");
+        availableUnits.add("piece");
+        availableUnits.add("GB");
     }
 
     private void initAvailableParts() {
@@ -72,16 +86,76 @@ public class TechnicianDatabase {
         noJsTechnician = new Technician("noJs@swalab.com", "noJs", "noJs", "01234567", appointments, taskAndNoteList, customers, warehousePartAndOrders);
     }
 
-    public Technician getTechnicianWithName(String name) {
-        if (noJsTechnician.getName().equals(name)) {
-            return noJsTechnician;
-        } else {
-            return null;
+    public Technician getTechnicianWithName(String name) throws TechnicianNotFoundException {
+        for (Technician technician : technicians) {
+            if (technician.getName().equals(name)) {
+                return technician;
+            }
         }
+        throw new TechnicianNotFoundException(name);
     }
 
     public List<AvailablePart> getAvailableParts() {
         return availableParts;
     }
 
+    public List<String> getAvailableUnits() {
+        return availableUnits;
+    }
+
+    public void deleteTechnician(String name) {
+        try {
+            technicians.remove(getTechnicianWithName(name));
+        } catch (TechnicianNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addTechnician(Technician newTechnician) {
+        deleteTechnician(newTechnician.getName());
+        for (Customer customer : newTechnician.getCustomers()) {
+            for (Appointment appointment : newTechnician.getAppointments()) {
+                if (appointment.getCustomer().getId() == customer.getId()) {
+                    appointment.setCustomer(customer);
+                }
+            }
+        }
+        for (AvailablePart availablePart : getAvailableParts()) {
+            for (WarehousePartAndOrder warehousePartAndOrder : newTechnician.getParts()) {
+                if (warehousePartAndOrder.getPart().getAvailablePart().getId() == availablePart.getId()) {
+                    warehousePartAndOrder.getPart().setAvailablePart(availablePart);
+                }
+            }
+        }
+        for (AvailablePart availablePart : getAvailableParts()) {
+            for (Appointment appointment : newTechnician.getAppointments()) {
+                for (PartWithQuantity partWithQuantity : appointment.getPlannedPartsAndServices()) {
+                    if (partWithQuantity.getAvailablePart().getId() == availablePart.getId()) {
+                        partWithQuantity.setAvailablePart(availablePart);
+                    }
+                }
+            }
+        }
+        for (AvailablePart availablePart : getAvailableParts()) {
+            for (Appointment appointment : newTechnician.getAppointments()) {
+                for (PartWithQuantity partWithQuantity : appointment.getUsedPartsAndServices()) {
+                    if (partWithQuantity.getAvailablePart().getId() == availablePart.getId()) {
+                        partWithQuantity.setAvailablePart(availablePart);
+                    }
+                }
+            }
+        }
+        for (AvailablePart availablePart : getAvailableParts()) {
+            for (Customer customer : newTechnician.getCustomers()) {
+                for (Product product : customer.getProducts()) {
+                    for (PartWithQuantity partWithQuantity : product.getProductParts()) {
+                        if (partWithQuantity.getAvailablePart().getId() == availablePart.getId()) {
+                            partWithQuantity.setAvailablePart(availablePart);
+                        }
+                    }
+                }
+            }
+        }
+        technicians.add(newTechnician);
+    }
 }

@@ -5,7 +5,9 @@ import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.Customer;
 import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -30,12 +32,12 @@ public class CustomerController {
     }
 
     @GetMapping("/customer")
-    public Customer getCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") long customerId) {
+    public Customer getCustomer(@RequestParam("technician") String technicianName, @RequestParam("customerid") long customerId) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         return getCustomerWithId(technician, customerId);
     }
 
-    @PostMapping("/customer")
+  /*  @PostMapping("/customer")
     public long addCustomer(@RequestParam("technician") String technicianName, @RequestBody() Customer customer) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
@@ -80,7 +82,7 @@ public class CustomerController {
         if (!oldCustomer.getAppointmentHistoryList().equals(customer.getAppointmentHistoryList())) {
             //ToDo
         }
-    }
+    }  */
 
     private Customer getCustomerWithId(Technician technician, long customerId) {
         if (technician != null) {

@@ -1,13 +1,14 @@
 package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
+import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.AbstractTaskAndNote;
-import com.swalab.backend.model.Task;
 import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,23 +22,18 @@ public class TaskAndNoteController {
     }
 
     @GetMapping("/note/all")
-    public List<AbstractTaskAndNote> getAllNotes(@RequestParam("technician") String technicianName) {
+    public List<AbstractTaskAndNote> getAllNotes(@RequestParam("technician") String technicianName) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        if (technician != null) {
-            return technician.getTaskAndNotes();
-        } else {
-            //TODO
-            return new ArrayList<>();
-        }
+        return technician.getTaskAndNotes();
     }
 
     @GetMapping("/note")
-    public AbstractTaskAndNote getNote(@RequestParam("technician") String technicianName, @RequestParam("noteid") long noteId) {
+    public AbstractTaskAndNote getNote(@RequestParam("technician") String technicianName, @RequestParam("noteid") long noteId) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         return getNoteWithId(technician, noteId);
     }
 
-    @PostMapping("/note")
+  /*  @PostMapping("/note")
     public long addNote(@RequestParam("technician") String technicianName, @RequestBody() AbstractTaskAndNote abstractTaskAndNote) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
@@ -75,7 +71,7 @@ public class TaskAndNoteController {
         if (oldNote.getClass() == Task.class) {
             ((Task)oldNote).setStatus(((Task)abstractTaskAndNote).getStatus());
         }
-    }
+    } */
 
     private AbstractTaskAndNote getNoteWithId(Technician technician, long noteId) {
         if (technician != null) {

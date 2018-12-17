@@ -25,7 +25,7 @@ public class TechnicianControllerTest {
     private String technicianName = "noJs";
 
     @Test
-    public void getTechnician() {
+    public void getTechnician() throws TechnicianNotFoundException {
         assertThat(technicianController.getTechnician(technicianName)).isNotNull();
         assertThat(technicianController.getTechnician(technicianName)).isEqualTo(technicianDatabase.getTechnicianWithName(technicianName));
     }

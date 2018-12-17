@@ -1,13 +1,15 @@
 package com.swalab.backend.restcontroller;
 
 import com.swalab.backend.database.TechnicianDatabase;
+import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.AvailablePart;
 import com.swalab.backend.model.Technician;
 import com.swalab.backend.model.WarehousePartAndOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,23 +23,18 @@ public class PartController {
     }
 
     @GetMapping("/warehousepart/all")
-    public List<WarehousePartAndOrder> getAllParts(@RequestParam("technician") String technicianName) {
+    public List<WarehousePartAndOrder> getAllParts(@RequestParam("technician") String technicianName) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        if (technician != null) {
-            return technician.getParts();
-        } else {
-            //TODO
-            return new ArrayList<>();
-        }
+        return technician.getParts();
     }
 
     @GetMapping("/warehousepart")
-    public WarehousePartAndOrder getPart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") long warehousepartId) {
+    public WarehousePartAndOrder getPart(@RequestParam("technician") String technicianName, @RequestParam("warehousepartid") long warehousepartId) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         return getPartWithId(technician, warehousepartId);
     }
 
-    @PostMapping("/warehousepart")
+  /*  @PostMapping("/warehousepart")
     public long addPart(@RequestParam("technician") String technicianName, @RequestBody() WarehousePartAndOrder warehousePartAndOrder) {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician != null) {
@@ -77,11 +74,16 @@ public class PartController {
         if (!oldWarehousePartAndOrder.getPart().equals(warehousePartAndOrder.getPart())) {
             // ToDo
         }
-    }
+    } */
 
     @GetMapping("/availablepart/all")
     public List<AvailablePart> getAvailableParts() {
         return technicianDatabase.getAvailableParts();
+    }
+
+    @GetMapping("/availableunit/all")
+    public List<String> getAvailableUnits() {
+        return technicianDatabase.getAvailableUnits();
     }
 
     private WarehousePartAndOrder getPartWithId(Technician technician, long partId) {

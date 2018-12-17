@@ -3,11 +3,9 @@ package com.swalab.backend.restcontroller;
 import com.swalab.backend.database.TechnicianDatabase;
 import com.swalab.backend.exceptionhandling.ObjectNotFoundException;
 import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
-import com.swalab.backend.model.*;
+import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class TechnicianController {
@@ -31,11 +29,19 @@ public class TechnicianController {
     }
 
     @GetMapping("/technician")
-    public Technician getTechnician(@RequestParam("technician") String technicianName) {
+    public Technician getTechnician(@RequestParam("technician") String technicianName) throws TechnicianNotFoundException {
         return technicianDatabase.getTechnicianWithName(technicianName);
     }
 
     @PutMapping("/technician")
+    public void editTechnician(@RequestBody() Technician newTechnician) throws ObjectNotFoundException {
+        if (newTechnician == null) {
+            throw new TechnicianNotFoundException("null");
+        }
+        technicianDatabase.addTechnician(newTechnician);
+    }
+
+  /*  @PutMapping("/technician")
     public void editTechnician(@RequestBody() Technician newTechnician) throws ObjectNotFoundException {
         if (newTechnician == null) {
             throw new TechnicianNotFoundException("null");
@@ -81,6 +87,5 @@ public class TechnicianController {
         //add new created customers
         newTaskAndNotes.stream().filter(t -> !oldTaskAndNotes.contains(t)).forEach(t -> taskAndNoteController.addNote(oldTechnician.getName(), t));
 
-
-    }
+    } */
 }

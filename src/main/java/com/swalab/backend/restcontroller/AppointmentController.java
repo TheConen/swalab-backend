@@ -4,10 +4,11 @@ import com.swalab.backend.database.TechnicianDatabase;
 import com.swalab.backend.exceptionhandling.AppointmentNotFoundException;
 import com.swalab.backend.exceptionhandling.TechnicianNotFoundException;
 import com.swalab.backend.model.Appointment;
-import com.swalab.backend.model.Status;
 import com.swalab.backend.model.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -24,18 +25,12 @@ public class AppointmentController {
     @GetMapping("/appointment/all")
     public List<Appointment> getAllAppointments(@RequestParam("technician") String technicianName) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        if (technician == null) {
-            throw new TechnicianNotFoundException(technicianName);
-        }
         return technician.getAppointments();
     }
 
     @GetMapping("/appointment")
     public Appointment getAppointment(@RequestParam("technician") String technicianName, @RequestParam("appointmentid") long appointmentId) throws TechnicianNotFoundException, AppointmentNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
-        if (technician == null) {
-            throw new TechnicianNotFoundException(technicianName);
-        }
         Appointment appointment = getAppointmentWithId(technician, appointmentId);
         if (appointment == null) {
             throw new AppointmentNotFoundException(appointmentId + "");
@@ -43,7 +38,7 @@ public class AppointmentController {
         return appointment;
     }
 
-    @PostMapping("/appointment")
+  /*  @PostMapping("/appointment")
     public long addAppointment(@RequestParam("technician") String technicianName, @RequestBody() Appointment appointment) throws TechnicianNotFoundException {
         Technician technician = technicianDatabase.getTechnicianWithName(technicianName);
         if (technician == null) {
@@ -103,7 +98,7 @@ public class AppointmentController {
         if (!oldAppointment.getUsedPartsAndServices().equals(appointment.getUsedPartsAndServices())) {
             //ToDo
         }
-    }
+    }  */
 
     private Appointment getAppointmentWithId(Technician technician, long appointmentId) {
         if (technician != null) {
